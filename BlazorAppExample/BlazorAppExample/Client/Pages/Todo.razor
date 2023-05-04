@@ -1,0 +1,33 @@
+﻿@page "/todo"
+@using BlazorAppExample.Shared
+<h3>Todo</h3>
+
+<div id="myDIV" class="header">
+  <h2>My To Do List</h2>
+  <input type="text" id="myInput" placeholder="Title..." @bind-value="newTodo">
+  <span @onclick="AddItem" class="addBtn">Add</span>
+</div>
+
+<ul id="myUL">
+   @foreach(var todo in todoItem)
+   {
+       <li>@todo.Title</li>
+   }
+</ul>
+
+@code {
+
+    private List<TodoItem> todoItem = new();
+    
+    private string? newTodo;
+
+    private void AddItem()
+    {
+        if(!string.IsNullOrWhiteSpace(newTodo))
+        {
+             todoItem.Add(new TodoItem { Title = newTodo });
+             newTodo = string.Empty;
+        }
+    }
+
+}

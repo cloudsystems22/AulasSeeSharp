@@ -1,7 +1,6 @@
 using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -51,6 +50,14 @@ namespace WebApplication1
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IProductMapper, ProductMapper>();
             services.AddScoped<IProductApplication, ProductApplication>();
+
+            services.AddCors(o => o.AddPolicy("CorsPolicy", builder => {
+                builder
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials()
+                .WithOrigins("http://localhost:4200");
+            }));
         }
 
         public void ConfigurationContainer(ContainerBuilder builder)
@@ -68,11 +75,11 @@ namespace WebApplication1
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Model DDD"));
             }
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {

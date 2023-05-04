@@ -3,11 +3,15 @@
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["WebApplication1/WebApplication1.csproj", "WebApplication1/"]
+COPY ["WebApplication1.Infrastrucure/WebApplication1.Infrastrucure.csproj", "WebApplication1.Infrastrucure/"]
+COPY ["WebApplication1.Domain.Core/WebApplication1.Domain.Core.csproj", "WebApplication1.Domain.Core/"]
+COPY ["WebApplication1.Domain/WebApplication1.Domain.csproj", "WebApplication1.Domain/"]
+COPY ["WebApplication1.Application/WebApplication1.Application.csproj", "WebApplication1.Application/"]
+COPY ["WebApplication1.Domain.Services/WebApplication1.Domain.Services.csproj", "WebApplication1.Domain.Services/"]
 RUN dotnet restore "WebApplication1/WebApplication1.csproj"
 COPY . .
 WORKDIR "/src/WebApplication1"

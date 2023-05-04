@@ -1,4 +1,5 @@
 using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -24,5 +25,6 @@ namespace WebApplication1
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
     }
 }
